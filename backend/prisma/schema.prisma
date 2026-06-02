@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  category_id   Int     @id @default(autoincrement())
+  category_name String  @db.VarChar(100)
+  items         Item[]
+
+  @@map("Categories")
+}
+
+model Unit {
+  unit_id   Int     @id @default(autoincrement())
+  unit_name String  @db.VarChar(50)
+  items     Item[]
+
+  @@map("Units")
+}
+
+model BudgetYear {
+  year_id      Int           @id
+  start_date   DateTime      @db.Date
+  end_date     DateTime      @db.Date
+  is_active    Boolean       @default(true)
+  transactions Transaction[]
+
+  @@map("Budget_Years")
+}
+
+enum ItemType {
+  MATERIAL   @map("วัสดุ")
+  EQUIPMENT  @map("ครุภัณฑ์")
+}
+
+model Item {
+  item_id     Int       @id @default(autoincrement())
+  item_name   String    @db.VarChar(255)
+  category_id Int?
+  unit_id     Int?
+  item_type   ItemType
+  min_stock   Int       @default(0)
+
+  category   Category?  @relation(fields: [category_id], references: [category_id])
+  unit       Unit?      @relation(fields: [unit_id], references: [unit_id])
+  stock_lots StockLot[]
+
+  @@map("Items")
+}
+
+model StockLot {
+  lot_id        Int           @id @default(autoincrement())
+  item_id       Int?
+  lot_number    String?       @db.VarChar(50)
+  qr_code_data  String?       @unique @db.VarChar(191)
+  receive_date  DateTime      @db.Date
+  expiry_date   DateTime?     @db.Date
+  cost_per_unit Decimal?      @db.Decimal(10, 2)
+
+  item         Item?         @relation(fields: [item_id], references: [item_id])
+  transactions Transaction[]
+
+  @@map("Stock_Lots")
+}
+
+enum TransactionType {
+  IN       @map("รับเข้า")
+  WITHDRAW @map("เบิกจ่าย")
+  SALE     @map("จำหน่ายออก")
+  FORWARD  @map("ยกยอดมา")
+}
+
+model Transaction {
+  trans_id   Int             @id @default(autoincrement())
+  lot_id     Int?
+  year_id    Int?
+  trans_type TransactionType
+  quantity   Int
+  trans_date DateTime        @default(now()) @db.Timestamp(0)
+  remark     String?         @db.Text
+
+  lot         StockLot?   @relation(fields: [lot_id], references: [lot_id])
+  budget_year BudgetYear? @relation(fields: [year_id], references: [year_id])
+
+  @@map("Transactions")
+}
+
+model User {
+  user_id    Int      @id @default(autoincrement())
+  email      String   @unique @db.VarChar(100)
+  password   String   @db.VarChar(255)
+  name       String?  @db.VarChar(100)
+  role       String   @default("USER")
+  created_at DateTime @default(now())
+
+  @@map("Users")
+}

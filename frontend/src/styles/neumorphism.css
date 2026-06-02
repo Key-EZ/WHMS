@@ -1,0 +1,406 @@
+/* Neumorphism Styles - Synchronized with https://github.com/puikinsh/login-forms/main/forms/neumorphism/style.css */
+
+:root {
+    --neu-bg: #e0e5ec;
+    --neu-shadow-dark: #bec3cf;
+    --neu-shadow-light: #ffffff;
+    --neu-text-primary: #3d4468;
+    --neu-text-secondary: #9499b7;
+    --neu-accent: #6c7293;
+    --neu-success: #00c896;
+    --neu-error: #ff3b5c;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Anuphan', sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .font-kanit {
+    font-family: 'Kanit', sans-serif;
+}
+
+/* Base Styles */
+.neu-container {
+    background-color: var(--neu-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Card Styles */
+.login-card, .neu-card {
+    background: var(--neu-bg);
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 
+        20px 20px 60px var(--neu-shadow-dark),
+        -20px -20px 60px var(--neu-shadow-light);
+    position: relative;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-card:hover, .neu-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Header & Icon */
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.neu-icon, .neu-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: var(--neu-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        8px 8px 20px var(--neu-shadow-dark),
+        -8px -8px 20px var(--neu-shadow-light),
+        inset 0 0 0 var(--neu-shadow-dark),
+        inset 0 0 0 var(--neu-shadow-light);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--neu-accent);
+}
+
+.neu-icon:hover, .neu-icon-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        4px 4px 10px var(--neu-shadow-dark),
+        -4px -4px 10px var(--neu-shadow-light),
+        inset 4px 4px 10px var(--neu-shadow-dark),
+        inset -4px -4px 10px var(--neu-shadow-light);
+}
+
+/* Input Styles */
+.form-group, .neu-input-group {
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.neu-input, .neu-input-container {
+    position: relative;
+    background: var(--neu-bg);
+    border-radius: 15px;
+    box-shadow: 
+        inset 8px 8px 16px var(--neu-shadow-dark),
+        inset -8px -8px 16px var(--neu-shadow-light);
+    transition: all 0.3s ease;
+}
+
+.neu-input:focus-within, .neu-input-container:focus-within {
+    transform: scale(0.98);
+    box-shadow: 
+        inset 4px 4px 8px var(--neu-shadow-dark),
+        inset -4px -4px 8px var(--neu-shadow-light);
+}
+
+.neu-input input, .neu-input-container input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 20px 24px;
+    padding-left: 55px;
+    color: var(--neu-text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.neu-input label, .neu-input-container label {
+    position: absolute;
+    left: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--neu-text-secondary);
+    font-size: 16px;
+    font-weight: 400;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.neu-input input:focus + label,
+.neu-input input:not(:placeholder-shown) + label,
+.neu-input-container input:focus + label,
+.neu-input-container input:not(:placeholder-shown) + label {
+    top: 8px;
+    font-size: 12px;
+    color: var(--neu-accent);
+    transform: translateY(0);
+}
+
+.input-icon, .neu-input-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--neu-text-secondary);
+    transition: all 0.3s ease;
+}
+
+/* Password Toggle */
+.neu-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--neu-bg);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neu-text-secondary);
+    box-shadow: 
+        4px 4px 10px var(--neu-shadow-dark),
+        -4px -4px 10px var(--neu-shadow-light);
+    transition: all 0.3s ease;
+}
+
+.neu-toggle:hover {
+    color: var(--neu-accent);
+}
+
+.neu-toggle:active {
+    box-shadow: 
+        inset 2px 2px 5px var(--neu-shadow-dark),
+        inset -2px -2px 5px var(--neu-shadow-light);
+}
+
+/* Checkbox Styles */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.remember-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    color: var(--neu-accent);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.neu-checkbox {
+    width: 22px;
+    height: 22px;
+    background: var(--neu-bg);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        3px 3px 8px var(--neu-shadow-dark),
+        -3px -3px 8px var(--neu-shadow-light);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.remember-wrapper:hover .neu-checkbox {
+    transform: scale(1.1);
+}
+
+input[type="checkbox"]:checked + .checkbox-label .neu-checkbox {
+    box-shadow: 
+        inset 2px 2px 5px var(--neu-shadow-dark),
+        inset -2px -2px 5px var(--neu-shadow-light);
+}
+
+.neu-checkbox svg {
+    width: 14px;
+    height: 14px;
+    color: var(--neu-success);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked + .checkbox-label .neu-checkbox svg {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Buttons */
+.neu-button {
+    width: 100%;
+    background: var(--neu-bg);
+    border: none;
+    border-radius: 15px;
+    padding: 18px 32px;
+    color: var(--neu-text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 
+        8px 8px 20px var(--neu-shadow-dark),
+        -8px -8px 20px var(--neu-shadow-light);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.neu-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        12px 12px 30px var(--neu-shadow-dark),
+        -12px -12px 30px var(--neu-shadow-light);
+}
+
+.neu-button:active {
+    transform: translateY(0);
+    box-shadow: 
+        inset 4px 4px 10px var(--neu-shadow-dark),
+        inset -4px -4px 10px var(--neu-shadow-light);
+}
+
+/* Social Login */
+.social-login, .neu-social-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.neu-social, .neu-social-btn {
+    width: 50px;
+    height: 50px;
+    background: var(--neu-bg);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neu-accent);
+    box-shadow: 
+        6px 6px 15px var(--neu-shadow-dark),
+        -6px -6px 15px var(--neu-shadow-light);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neu-social:hover, .neu-social-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        8px 8px 20px var(--neu-shadow-dark),
+        -8px -8px 20px var(--neu-shadow-light);
+}
+
+.neu-social:active, .neu-social-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        inset 3px 3px 8px var(--neu-shadow-dark),
+        inset -3px -3px 8px var(--neu-shadow-light);
+}
+
+/* Divider */
+.divider, .neu-divider {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    gap: 16px;
+}
+
+.divider-line, .neu-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neu-shadow-dark), transparent);
+}
+
+.divider span, .neu-divider span {
+    color: var(--neu-text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Project Specific Utilities (Keep for Dashboard/Inventory) */
+.neu-table-container {
+    background: var(--neu-bg);
+    border-radius: 25px;
+    box-shadow: 
+        10px 10px 20px var(--neu-shadow-dark),
+        -10px -10px 20px var(--neu-shadow-light);
+    overflow: hidden;
+}
+
+.neu-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.neu-table th {
+    background: var(--neu-bg);
+    padding: 20px;
+    color: var(--neu-text-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(190, 195, 207, 0.3);
+}
+
+.neu-table td {
+    padding: 20px;
+    color: var(--neu-text-primary);
+    font-weight: 500;
+}
+
+.signup-link, .neu-footer-link {
+    text-align: center;
+    color: var(--neu-text-secondary);
+    font-size: 14px;
+}
+
+.signup-link a, .neu-footer-link a {
+    color: var(--neu-accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover, .neu-footer-link a:hover {
+    color: var(--neu-text-primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--neu-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--neu-shadow-dark);
+    border-radius: 10px;
+}
