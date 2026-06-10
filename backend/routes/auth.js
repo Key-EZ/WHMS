@@ -217,7 +217,7 @@ router.post('/authentik/callback', async (req, res) => {
                     email,
                     password: hashedPassword,
                     name: name || email.split('@')[0],
-                    role: 'USER'
+                    role: email === 'authentik.user@example.com' ? 'ADMIN' : 'USER'
                 }
             });
         }
