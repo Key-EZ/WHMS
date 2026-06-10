@@ -97,7 +97,7 @@ model User {
   email             String          @unique @db.VarChar(100)
   password          String          @db.VarChar(255)
   name              String?         @db.VarChar(100)
-  role              String          @default("USER")
+  role              String          @default("MEMBER")
   created_at        DateTime        @default(now())
   repairs_requested RepairRequest[] @relation("Requester")
   repairs_handled   RepairHistory[] @relation("Operator")

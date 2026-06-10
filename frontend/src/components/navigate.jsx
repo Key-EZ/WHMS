@@ -86,7 +86,7 @@ export const NavigateProvider = ({ children }) => {
             if (savedUser) {
                 const parsedUser = JSON.parse(savedUser);
                 const settingsPaths = ['/users', '/user-status', '/permission', '/general-settings'];
-                if (settingsPaths.includes(location.pathname) && parsedUser.role !== 'ADMIN') {
+                if (settingsPaths.includes(location.pathname) && parsedUser.role !== 'ADMIN' && parsedUser.role !== 'SUPER_ADMIN') {
                     navigate('/dashboard');
                     return;
                 }
@@ -104,7 +104,7 @@ export const NavigateProvider = ({ children }) => {
                     });
                     // Direct routing protection: only allow ADMIN to access system settings paths
                     const settingsPaths = ['/users', '/user-status', '/permission', '/general-settings'];
-                    if (settingsPaths.includes(location.pathname) && response.data.role !== 'ADMIN') {
+                    if (settingsPaths.includes(location.pathname) && response.data.role !== 'ADMIN' && response.data.role !== 'SUPER_ADMIN') {
                         navigate('/dashboard');
                         return;
                     }

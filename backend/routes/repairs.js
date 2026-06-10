@@ -107,10 +107,10 @@ router.get('/dashboard/cards', async (req, res) => {
         const assignedCancelled = assignedRepairs.filter(r => r.status === 'CANCELLED').length;
 
         res.json({
-            show_queue_cards: role === 'ADMIN',
-            show_assigned_cards: role === 'ADMIN' || assignedRepairs.length > 0,
-            show_department_chart: role === 'ADMIN',
-            show_operator_chart: role === 'ADMIN',
+            show_queue_cards: role === 'SUPER_ADMIN' || role === 'ADMIN' || role === 'REPAIR_STAFF',
+            show_assigned_cards: role === 'SUPER_ADMIN' || role === 'ADMIN' || role === 'REPAIR_STAFF' || assignedRepairs.length > 0,
+            show_department_chart: role === 'SUPER_ADMIN' || role === 'ADMIN',
+            show_operator_chart: role === 'SUPER_ADMIN' || role === 'ADMIN',
             my_status_cards: [
                 { label: 'รอดำเนินการ', count_text: `${myPending} รายการ`, scope_text: 'รอการตรวจสอบ', color: '#ff9f43', icon_class: 'icon-clock', href: '/repair-history' },
                 { label: 'กำลังดำเนินการ', count_text: `${myInProgress} รายการ`, scope_text: 'กำลังดำเนินการซ่อม', color: '#00bad1', icon_class: 'icon-tools', href: '/repair-history' },

@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
                 email: registerEmail,
                 password: hashedPassword,
                 name: name || registerEmail.split('@')[0],
-                role: 'USER'
+                role: 'MEMBER'
             }
         });
 
@@ -217,7 +217,7 @@ router.post('/authentik/callback', async (req, res) => {
                     email,
                     password: hashedPassword,
                     name: name || email.split('@')[0],
-                    role: email === 'authentik.user@example.com' ? 'ADMIN' : 'USER'
+                    role: email === 'authentik.user@example.com' ? 'SUPER_ADMIN' : 'MEMBER'
                 }
             });
         }
@@ -303,85 +303,103 @@ router.get('/me', authenticateToken, async (req, res) => {
                 title: 'Dashboard',
                 url: '/',
                 icon: 'icon-dashboard'
-            },
-            // 2. Repair (แจ้งซ่อม)
-            {
-                title: 'Repair',
-                icon: 'icon-tools',
-                children: [
-                    {
-                        title: 'Repair Dashboard',
-                        url: '/repair-dashboard',
-                        icon: 'icon-dashboard'
-                    },
-                    {
-                        title: 'Get a repair',
-                        url: '/repair-request',
-                        icon: 'icon-write'
-                    },
-                    {
-                        title: 'Repair history',
-                        url: '/repair-history',
-                        icon: 'icon-clock'
-                    },
-                    {
-                        title: 'Repair jobs',
-                        url: '/repair-jobs',
-                        icon: 'icon-customer'
-                    },
-                    {
-                        title: 'Repair status',
-                        url: '/repair-statuses',
-                        icon: 'icon-index'
-                    },
-                    {
-                        title: 'Settings',
-                        url: '/repair-settings',
-                        icon: 'icon-settings'
-                    }
-                ]
-            },
-            // 3. Inventory (คลังสินค้า)
-            {
-                title: 'Inventory',
-                icon: 'icon-product',
-                children: [
-                    {
-                        title: 'My equipment',
-                        url: '/inventory-myassets',
-                        icon: 'icon-star0'
-                    },
-                    {
-                        title: 'Inventory',
-                        url: '/inventory-assets',
-                        icon: 'icon-index'
-                    },
-                    {
-                        title: 'Holder',
-                        url: '/inventory-holders',
-                        icon: 'icon-customer'
-                    },
-                    {
-                        title: 'Item rows',
-                        url: '/inventory-items',
-                        icon: 'icon-list'
-                    },
-                    {
-                        title: 'Category',
-                        url: '/inventory-categories',
-                        icon: 'icon-category'
-                    },
-                    {
-                        title: 'Settings',
-                        url: '/inventory-settings',
-                        icon: 'icon-settings'
-                    }
-                ]
             }
         ];
 
-        // 4. Settings (ตั้งค่าระบบ) - Only visible to ADMIN users
-        if (user.role === 'ADMIN') {
+        const isSuperAdmin = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
+        const isInventoryStaff = user.role === 'INVENTORY_STAFF';
+        const isRepairStaff = user.role === 'REPAIR_STAFF';
+        const isMember = user.role === 'MEMBER' || user.role === 'USER';
+
+        // Build Repair children
+        const repairChildren = [];
+        if (isSuperAdmin || isRepairStaff) {
+            repairChildren.push({
+                title: 'Repair Dashboard',
+                url: '/repair-dashboard',
+                icon: 'icon-dashboard'
+            });
+        }
+        // All roles can submit a repair and view history
+        repairChildren.push({
+            title: 'Get a repair',
+            url: '/repair-request',
+            icon: 'icon-write'
+        });
+        repairChildren.push({
+            title: 'Repair history',
+            url: '/repair-history',
+            icon: 'icon-clock'
+        });
+        if (isSuperAdmin || isRepairStaff) {
+            repairChildren.push({
+                title: 'Repair jobs',
+                url: '/repair-jobs',
+                icon: 'icon-customer'
+            });
+            repairChildren.push({
+                title: 'Repair status',
+                url: '/repair-statuses',
+                icon: 'icon-index'
+            });
+            repairChildren.push({
+                title: 'Settings',
+                url: '/repair-settings',
+                icon: 'icon-settings'
+            });
+        }
+
+        menus.push({
+            title: 'Repair',
+            icon: 'icon-tools',
+            children: repairChildren
+        });
+
+        // Build Inventory children
+        const inventoryChildren = [
+            {
+                title: 'My equipment',
+                url: '/inventory-myassets',
+                icon: 'icon-star0'
+            }
+        ];
+
+        if (isSuperAdmin || isInventoryStaff) {
+            inventoryChildren.push({
+                title: 'Inventory',
+                url: '/inventory-assets',
+                icon: 'icon-index'
+            });
+            inventoryChildren.push({
+                title: 'Holder',
+                url: '/inventory-holders',
+                icon: 'icon-customer'
+            });
+            inventoryChildren.push({
+                title: 'Item rows',
+                url: '/inventory-items',
+                icon: 'icon-list'
+            });
+            inventoryChildren.push({
+                title: 'Category',
+                url: '/inventory-categories',
+                icon: 'icon-category'
+            });
+            inventoryChildren.push({
+                title: 'Settings',
+                url: '/inventory-settings',
+                icon: 'icon-settings'
+            });
+        }
+
+        menus.push({
+            title: 'Inventory',
+            icon: 'icon-product',
+            children: inventoryChildren
+        });
+
+        // 4. Settings (ตั้งค่าระบบ) - Only visible to SUPER_ADMIN/ADMIN users
+        if (isSuperAdmin) {
             menus.push({
                 title: 'Settings',
                 icon: 'icon-settings',
@@ -473,7 +491,7 @@ router.get('/me', authenticateToken, async (req, res) => {
 });
 
 const requireAdmin = (req, res, next) => {
-    if (!req.user || req.user.role !== 'ADMIN') {
+    if (!req.user || (req.user.role !== 'SUPER_ADMIN' && req.user.role !== 'ADMIN')) {
         return res.status(403).json({ error: 'Access forbidden: Administrator role required' });
     }
     next();

@@ -157,8 +157,12 @@ const Users = () => {
                                         </td>
                                         <td className="text-center">
                                             <span className={`px-2.5 py-1 rounded text-xs font-black uppercase ${
-                                                row.role === 'ADMIN' 
-                                                ? 'bg-red-50 text-red-500' 
+                                                row.role === 'ADMIN' || row.role === 'SUPER_ADMIN'
+                                                ? 'bg-red-50 text-red-500'
+                                                : row.role === 'INVENTORY_STAFF'
+                                                ? 'bg-emerald-50 text-emerald-600'
+                                                : row.role === 'REPAIR_STAFF'
+                                                ? 'bg-amber-50 text-amber-600'
                                                 : 'bg-blue-50 text-blue-600'
                                             }`}>
                                                 {row.role}
@@ -252,8 +256,12 @@ const Users = () => {
                                     className="vx-input text-sm"
                                     disabled={editingUser?.user_id === 1}
                                 >
-                                    <option value="USER">ผู้ใช้งานทั่วไป (USER)</option>
+                                    <option value="SUPER_ADMIN">ผู้ดูแลระบบสูงสุด (SUPER_ADMIN)</option>
+                                    <option value="INVENTORY_STAFF">ผู้ดูแลคลังสินค้า (INVENTORY_STAFF)</option>
+                                    <option value="REPAIR_STAFF">ช่างผู้ซ่อมพัสดุ (REPAIR_STAFF)</option>
+                                    <option value="MEMBER">สมาชิกทั่วไป (MEMBER)</option>
                                     <option value="ADMIN">ผู้ดูแลระบบ (ADMIN)</option>
+                                    <option value="USER">ผู้ใช้งานทั่วไป (USER)</option>
                                 </select>
                             </div>
 
