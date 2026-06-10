@@ -1,0 +1,721 @@
+/* Modern SaaS Login Form for React WHMS - Scoped Stylesheet */
+
+.login-page-wrapper {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #fafbfc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    line-height: 1.5;
+    width: 100%;
+}
+
+.login-page-wrapper * {
+    box-sizing: border-box;
+}
+
+.login-page-wrapper .login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-page-wrapper .login-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 48px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 8px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    width: 100%;
+}
+
+.login-page-wrapper .login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-page-wrapper .logo {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-page-wrapper .login-header h2 {
+    color: #1a1f36;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.login-page-wrapper .login-header p {
+    color: #8792a2;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Input Groups with Floating Labels */
+.login-page-wrapper .input-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.login-page-wrapper .input-group input {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e3e8ee;
+    border-radius: 6px;
+    padding: 16px 14px 8px 14px;
+    color: #1a1f36;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.login-page-wrapper .input-group input:focus {
+    border-color: #635BFF;
+}
+
+.login-page-wrapper .input-group input::placeholder {
+    color: transparent;
+}
+
+.login-page-wrapper .input-group label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8792a2;
+    font-size: 16px;
+    font-weight: 400;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background: #ffffff;
+    padding: 0 2px;
+}
+
+.login-page-wrapper .input-group input:focus + label,
+.login-page-wrapper .input-group input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #635BFF;
+    transform: translateY(-50%);
+}
+
+.login-page-wrapper .input-group input:not(:focus):not(:placeholder-shown) + label {
+    color: #6b7385;
+}
+
+/* Custom Border Animation */
+.login-page-wrapper .input-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #635BFF;
+    transition: width 0.3s ease;
+}
+
+.login-page-wrapper .input-group input:focus ~ .input-border {
+    width: 100%;
+}
+
+/* Password Toggle */
+.login-page-wrapper .input-group:has(.password-toggle) input {
+    padding-right: 42px;
+}
+
+.login-page-wrapper .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #8792a2;
+    padding: 6px;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page-wrapper .password-toggle:hover {
+    color: #635BFF;
+}
+
+/* Form Options */
+.login-page-wrapper .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.login-page-wrapper .checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #6b7385;
+    font-weight: 500;
+}
+
+.login-page-wrapper .checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.login-page-wrapper .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #d1d9e0;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+}
+
+.login-page-wrapper .checkbox-container input[type="checkbox"]:checked + .checkmark {
+    background: #635BFF;
+    border-color: #635BFF;
+    color: white;
+}
+
+.login-page-wrapper .forgot-link {
+    color: #635BFF;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-page-wrapper .forgot-link:hover {
+    color: #4c44d4;
+}
+
+/* Submit Button */
+.login-page-wrapper .submit-btn {
+    width: 100%;
+    background: #635BFF;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 24px;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page-wrapper .submit-btn:hover {
+    background: #4c44d4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.4);
+}
+
+.login-page-wrapper .submit-btn:active {
+    transform: translateY(0);
+}
+
+.login-page-wrapper .submit-btn:disabled {
+    background: #a2a7b5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.login-page-wrapper .btn-text {
+    transition: opacity 0.2s ease;
+}
+
+.login-page-wrapper .btn-loader {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    color: #ffffff;
+}
+
+.login-page-wrapper .submit-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.login-page-wrapper .submit-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+/* Divider */
+.login-page-wrapper .divider {
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+}
+
+.login-page-wrapper .divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e3e8ee;
+}
+
+.login-page-wrapper .divider span {
+    background: #ffffff;
+    color: #8792a2;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Social Buttons */
+.login-page-wrapper .social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.login-page-wrapper .social-btn {
+    width: 100%;
+    background: #ffffff;
+    color: #6b7385;
+    border: 1px solid #e3e8ee;
+    border-radius: 6px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    min-height: 44px;
+}
+
+.login-page-wrapper .social-btn:hover {
+    border-color: #d1d9e0;
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.login-page-wrapper .social-btn:active {
+    transform: translateY(0);
+}
+
+/* Signup Link */
+.login-page-wrapper .signup-link {
+    text-align: center;
+    font-size: 14px;
+    color: #8792a2;
+}
+
+.login-page-wrapper .signup-link a {
+    color: #635BFF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-page-wrapper .signup-link a:hover {
+    color: #4c44d4;
+    text-decoration: underline;
+}
+
+/* Error States */
+.login-page-wrapper .error-message {
+    color: #f56565;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.2s ease;
+}
+
+.login-page-wrapper .error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.login-page-wrapper .input-group.error input {
+    border-color: #f56565;
+    background: #fef5f5;
+}
+
+.login-page-wrapper .input-group.error input:focus {
+    border-color: #f56565;
+}
+
+.login-page-wrapper .input-group.error label {
+    color: #f56565;
+}
+
+.login-page-wrapper .input-group.error .input-border {
+    background: #f56565;
+}
+
+/* Success Message */
+.login-page-wrapper .success-message {
+    display: none;
+    text-align: center;
+    padding: 32px 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.3s ease;
+}
+
+.login-page-wrapper .success-message.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.login-page-wrapper .success-icon {
+    margin: 0 auto 16px;
+    animation: successPop 0.5s ease-out;
+}
+
+@keyframes successPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.login-page-wrapper .success-message h3 {
+    color: #1a1f36;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.login-page-wrapper .success-message p {
+    color: #8792a2;
+    font-size: 14px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .login-page-wrapper {
+        padding: 16px;
+    }
+    
+    .login-page-wrapper .login-card {
+        padding: 36px 28px;
+        border-radius: 8px;
+    }
+    
+    .login-page-wrapper .login-header h2 {
+        font-size: 1.375rem;
+    }
+    
+    .login-page-wrapper .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
+/* === Accessibility: keyboard focus indicators === */
+.login-page-wrapper :focus-visible {
+    outline: 2px solid #635BFF;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .login-page-wrapper *, .login-page-wrapper *::before, .login-page-wrapper *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ==========================================================================
+   Landing Page Specific Styles
+   ========================================================================== */
+.landing-page-wrapper {
+    background: #fafbfc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #1a1f36;
+    line-height: 1.5;
+}
+
+.landing-page-wrapper .navbar-mktg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+}
+
+.landing-page-wrapper .nav-btn-text {
+    color: #6b7385;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+}
+
+.landing-page-wrapper .nav-btn-text:hover {
+    color: #635BFF;
+}
+
+.landing-page-wrapper .nav-btn-primary {
+    background: #635BFF;
+    color: #ffffff !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.landing-page-wrapper .nav-btn-primary:hover {
+    background: #4c44d4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.25);
+}
+
+.landing-page-wrapper .cta-btn-primary {
+    background: #635BFF;
+    color: #ffffff !important;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(99, 91, 255, 0.15);
+}
+
+.landing-page-wrapper .cta-btn-primary:hover {
+    background: #4c44d4;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 91, 255, 0.3);
+}
+
+.landing-page-wrapper .cta-btn-secondary {
+    background: #ffffff;
+    color: #6b7385 !important;
+    border: 1px solid #e3e8ee;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-page-wrapper .cta-btn-secondary:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fa;
+    color: #1a1f36 !important;
+}
+
+/* Feature Grid and Cards */
+.landing-page-wrapper .feature-section {
+    padding: 80px 0;
+    background: #ffffff;
+    border-top: 1px solid #e3e8ee;
+    border-bottom: 1px solid #e3e8ee;
+}
+
+.landing-page-wrapper .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.landing-page-wrapper .feature-card {
+    background: #fafbfc;
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.landing-page-wrapper .feature-card:hover {
+    background: #ffffff;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    border-color: rgba(99, 91, 255, 0.15);
+}
+
+.landing-page-wrapper .feature-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: rgba(99, 91, 255, 0.1);
+    color: #635BFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.landing-page-wrapper .feature-card h3 {
+    color: #1a1f36;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.landing-page-wrapper .feature-card p {
+    color: #6b7385;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Mockup Graphic Card */
+.landing-page-wrapper .mockup-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05), 0 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 440px;
+}
+
+.landing-page-wrapper .mockup-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e3e8ee;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.landing-page-wrapper .mockup-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1f36;
+}
+
+.landing-page-wrapper .mockup-stat-pill {
+    background: rgba(99, 91, 255, 0.1);
+    color: #635BFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 99px;
+}
+
+.landing-page-wrapper .mockup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f4f6f8;
+}
+
+.landing-page-wrapper .mockup-row:last-child {
+    border-bottom: none;
+}
+
+.landing-page-wrapper .mockup-item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.landing-page-wrapper .mockup-item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: #f4f6f8;
+    color: #6b7385;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-page-wrapper .mockup-item-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1a1f36;
+}
+
+.landing-page-wrapper .mockup-item-value {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #635BFF;
+}
+
+.landing-page-wrapper .mockup-item-value.danger {
+    color: #ef4444;
+    background: #fef2f2;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: inherit;
+}
+
+/* Footer Section */
+.landing-page-wrapper .footer-mktg {
+    padding: 48px 0;
+    text-align: center;
+    color: #8792a2;
+    font-size: 0.9rem;
+    border-top: 1px solid #e3e8ee;
+}
+
+/* Responsive Landing Page */
+@media (max-width: 991px) {
+    .landing-page-wrapper .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+@media (max-width: 767px) {
+    .landing-page-wrapper .navbar-mktg {
+        padding: 16px 0;
+    }
+    .landing-page-wrapper .feature-card {
+        padding: 24px;
+    }
+    .landing-page-wrapper .mockup-card {
+        display: none;
+    }
+}

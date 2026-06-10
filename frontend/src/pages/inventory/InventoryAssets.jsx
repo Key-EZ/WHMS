@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import api from '../api';
-import '../styles/styles.css';
+import api from '../../api';
+import '../../styles/styles.css';
 import { Search, Package } from 'lucide-react';
 
-const Inventory = () => {
+const InventoryAssets = () => {
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -28,27 +28,29 @@ const Inventory = () => {
     );
 
     return (
-        <div className="space-y-10">
-            {/* Header Area */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="space-y-8">
+            {/* Search header bar */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-[24px] border border-slate-100/60 shadow-sm">
                 <div>
-                    <h2 className="text-3xl font-black text-slate-800 font-kanit">คลังสินค้า</h2>
-                    <p className="text-slate-400 font-medium">ติดตามสถานะสินค้าคงคลังแบบเรียลไทม์</p>
+                    <h3 className="text-xl font-black text-slate-800 font-kanit">สถิติและล็อตพัสดุในคลังสินค้า</h3>
+                    <p className="text-slate-400 text-xs font-medium">รายการล็อตสิ่งของแยกตามเลขนำเข้าและวันหมดอายุ</p>
                 </div>
-                
-                <div className="w-full md:w-auto relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                    <input
-                        type="text"
-                        placeholder="ค้นหารายการหรือเลขล็อต..."
-                        className="vx-input pl-10 w-full md:w-72"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+
+                <div className="w-full md:w-auto">
+                    <div className="relative">
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="ค้นหารายการหรือเลขล็อต..."
+                            className="vx-input !pl-12 w-full md:w-72"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
                 </div>
             </div>
 
-            {/* Table Container */}
+            {/* Table Card */}
             <div className="vx-card !p-0 overflow-hidden">
                 <div className="vx-table-container">
                     <table className="vx-table">
@@ -82,20 +84,20 @@ const Inventory = () => {
                                     <tr key={index}>
                                         <td>
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 rounded-xl bg-[#4361ee]/10 flex items-center justify-center text-[#4361ee] shrink-0">
+                                                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400">
                                                     <Package size={18} />
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-slate-700">{row.item_name}</p>
-                                                    <p className="text-xs text-slate-400">{row.unit_name}</p>
+                                                    <p className="text-xs text-slate-400 font-medium">{row.unit_name}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="text-center">
-                                            <span className={`px-2.5 py-1 rounded text-xs font-black uppercase ${
+                                            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase shadow-sm ${
                                                 row.item_type === 'วัสดุ' 
-                                                ? 'bg-[#00bad1]/10 text-[#00bad1]' 
-                                                : 'bg-[#4361ee]/10 text-[#4361ee]'
+                                                ? 'bg-blue-50 text-blue-600' 
+                                                : 'bg-purple-50 text-purple-600'
                                             }`}>
                                                 {row.item_type}
                                             </span>
@@ -106,17 +108,11 @@ const Inventory = () => {
                                                 <span className="text-[10px] font-bold text-slate-400">ปีงบประมาณ {row.budget_year}</span>
                                             </div>
                                         </td>
-                                        <td>
-                                            <span className="text-sm font-semibold text-slate-500">
-                                                {row.expiry_date ? new Date(row.expiry_date).toLocaleDateString('th-TH') : 'N/A'}
-                                            </span>
+                                        <td className="text-slate-500 font-semibold text-sm">
+                                            {row.expiry_date ? new Date(row.expiry_date).toLocaleDateString('th-TH') : 'ไม่มีกำหนด'}
                                         </td>
                                         <td className="text-right">
-                                            <span className={`font-mono font-black text-lg ${
-                                                row.stock_on_hand <= 0 
-                                                ? 'text-[#ea5455] bg-[#ea5455]/10 px-2.5 py-1 rounded-lg' 
-                                                : 'text-slate-800'
-                                            }`}>
+                                            <span className={`font-mono font-black text-lg ${row.stock_on_hand <= 0 ? 'text-red-500' : 'text-[#4361ee]'}`}>
                                                 {row.stock_on_hand.toLocaleString()}
                                             </span>
                                         </td>
@@ -131,4 +127,4 @@ const Inventory = () => {
     );
 };
 
-export default Inventory;
+export default InventoryAssets;

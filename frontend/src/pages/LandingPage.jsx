@@ -1,92 +1,124 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/neumorphism.css';
-import { Shield, BarChart2, Package, Zap, ChevronRight, Globe, User, Mail } from 'lucide-react';
+import '../styles/modern-saas.css';
+import { Shield, BarChart2, Package, Zap, ChevronRight, CheckCircle, AlertTriangle } from 'lucide-react';
 
 const LandingPage = () => {
     return (
-        <div className="neu-container flex-col min-h-screen bg-[#e0e5ec]">
-            {/* Navbar */}
-            <nav className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 neu-icon-wrapper !m-0 !w-10 !h-10">
-                        <Package size={20} className="text-[#6c7293]" />
-                    </div>
-                    <span className="text-xl font-bold text-[#3d4468] font-kanit">WHMS</span>
-                </div>
-                <div className="flex gap-6">
-                    <Link to="/login" className="px-6 py-2 rounded-xl text-[#6c7293] font-medium hover:text-[#3d4468] transition">เข้าสู่ระบบ</Link>
-                    <Link to="/signup" className="px-6 py-2 rounded-xl bg-[#e0e5ec] shadow-[4px_4px_10px_#bec3cf,-4px_-4px_10px_#ffffff] text-[#3d4468] font-bold hover:shadow-inner transition">ลงทะเบียน</Link>
-                </div>
-            </nav>
+        <div className="landing-page-wrapper min-h-screen bg-[#fafbfc]">
 
+            <header className="w-full border-b border-[#e3e8ee] bg-white">
+                <div className="max-w-6xl mx-auto px-6 navbar-mktg">
+                    <div className="flex items-center gap-4">
+                        <Link to="/login" className="nav-btn-text">เข้าสู่ระบบ</Link>
+                        <Link to="/signup" className="nav-btn-primary">ลงทะเบียน</Link>
+                    </div>
+                </div>
+            </header>
             {/* Hero Section */}
-            <main className="flex-1 w-full max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-12">
-                <div className="flex-1 text-center md:text-left">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-[#3d4468] leading-tight mb-6 font-kanit">
-                        ระบบจัดการ <br /> 
-                        <span className="text-[#6c7293]">คลังสินค้าอัจฉริยะ</span>
+            <main className="max-w-6xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="flex-1 text-center md:text-left space-y-6">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a1f36] leading-tight font-kanit">
+                        ระบบจัดการคลังพัสดุ <br />
+                        และแจ้งซ่อม <span className="text-[#635BFF]">อัจฉริยะ</span>
                     </h1>
-                    <p className="text-lg text-[#9499b7] mb-10 max-w-lg">
-                        สัมผัสประสบการณ์การจัดการคลังสินค้ารูปแบบใหม่ ด้วยอินเตอร์เฟซที่สวยงาม ใช้งานง่าย มั่นคง และรวดเร็ว พร้อมรองรับทุกความต้องการของคุณ
+                    <p className="text-lg text-[#6b7385] max-w-lg leading-relaxed font-medium">
+                        สัมผัสประสบการณ์การจัดการคลังพัสดุและระบบส่งซ่อมออนไลน์รูปแบบใหม่ ด้วยอินเตอร์เฟซที่สะอาดตา ทันสมัย มั่นคง และรวดเร็ว พร้อมรองรับทุกแผนกในหน่วยงานของคุณ
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
-                        <Link to="/signup" className="neu-button !mt-0 !w-auto px-10 flex items-center justify-center gap-2">
-                            เริ่มต้นใช้งาน <ChevronRight size={20} />
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                        <Link to="/signup" className="cta-btn-primary">
+                            เริ่มต้นใช้งาน <ChevronRight size={18} />
                         </Link>
-                        <button className="px-10 py-[18px] rounded-[15px] bg-[#e0e5ec] shadow-[8px_8px_20px_#bec3cf,-8px_-8px_20px_#ffffff] text-[#6c7293] font-semibold hover:shadow-inner transition">
-                            เรียนรู้เพิ่มเติม
-                        </button>
+                        <Link to="/login" className="cta-btn-secondary">
+                            เข้าสู่ระบบ
+                        </Link>
                     </div>
                 </div>
 
                 <div className="flex-1 flex justify-center items-center">
-                    <div className="w-64 h-64 md:w-96 md:h-96 rounded-[50px] bg-[#e0e5ec] shadow-[20px_20px_60px_#bec3cf,-20px_-20px_60px_#ffffff] flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                        <Package size={120} className="text-[#bec3cf] opacity-50" />
-                        <div className="absolute top-10 right-10 w-20 h-20 rounded-full bg-[#e0e5ec] shadow-[8px_8px_16px_#bec3cf,-8px_-8px_16px_#ffffff] flex items-center justify-center">
-                            <BarChart2 size={30} className="text-[#6c7293]" />
+                    {/* Mockup Dashboard Card */}
+                    <div className="mockup-card">
+                        <div className="mockup-card-header">
+                            <span className="mockup-card-title">สถานะคลังพัสดุจำลอง</span>
+                            <span className="mockup-stat-pill">อัปเดตเรียลไทม์</span>
                         </div>
-                        <div className="absolute bottom-10 left-10 w-16 h-16 rounded-full bg-[#e0e5ec] shadow-[8px_8px_16px_#bec3cf,-8px_-8px_16px_#ffffff] flex items-center justify-center">
-                            <Shield size={24} className="text-[#6c7293]" />
+                        <div className="space-y-1">
+                            <div className="mockup-row">
+                                <div className="mockup-item-info">
+                                    <div className="mockup-item-icon">
+                                        <Package size={14} />
+                                    </div>
+                                    <span className="mockup-item-name">เครื่องคอมพิวเตอร์ Lenovo</span>
+                                </div>
+                                <span className="mockup-item-value">12 เครื่อง</span>
+                            </div>
+                            <div className="mockup-row">
+                                <div className="mockup-item-info">
+                                    <div className="mockup-item-icon">
+                                        <Package size={14} />
+                                    </div>
+                                    <span className="mockup-item-name">กระดาษ A4 Double A</span>
+                                </div>
+                                <span className="mockup-item-value">45 รีม</span>
+                            </div>
+                            <div className="mockup-row">
+                                <div className="mockup-item-info">
+                                    <div className="mockup-item-icon text-red-500">
+                                        <AlertTriangle size={14} />
+                                    </div>
+                                    <span className="mockup-item-name font-bold text-red-600">พัสดุใกล้หมดอายุการใช้งาน</span>
+                                </div>
+                                <span className="mockup-item-value danger">3 รายการ</span>
+                            </div>
+                            <div className="mockup-row">
+                                <div className="mockup-item-info">
+                                    <div className="mockup-item-icon text-emerald-500">
+                                        <CheckCircle size={14} />
+                                    </div>
+                                    <span className="mockup-item-name">สถานะใบงานแจ้งซ่อม</span>
+                                </div>
+                                <span className="mockup-item-value !text-emerald-500 font-bold">ดำเนินการเสร็จสิ้น</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </main>
 
             {/* Features Section */}
-            <section className="w-full bg-[#e0e5ec] py-20 px-6">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl font-bold text-[#3d4468] text-center mb-16 font-kanit">ฟีเจอร์ที่โดดเด่น</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <div className="p-8 rounded-[30px] bg-[#e0e5ec] shadow-[15px_15px_30px_#bec3cf,-15px_-15px_30px_#ffffff] hover:translate-y-[-5px] transition-all">
-                            <div className="w-14 h-14 neu-icon-wrapper !m-0 mb-6">
-                                <Zap size={24} className="text-[#6c7293]" />
+            <section className="feature-section">
+                <div className="max-w-6xl mx-auto px-6">
+                    <h2 className="text-3xl font-extrabold text-[#1a1f36] text-center mb-16 font-kanit">ฟีเจอร์ที่โดดเด่นของระบบ</h2>
+                    <div className="feature-grid">
+                        <div className="feature-card">
+                            <div className="feature-icon-box">
+                                <Zap size={24} />
                             </div>
-                            <h3 className="text-xl font-bold text-[#3d4468] mb-4 font-kanit">ซิงค์ข้อมูลเรียลไทม์</h3>
-                            <p className="text-[#9499b7]">อัปเดตข้อมูลสินค้าคงคลังของคุณให้เป็นปัจจุบันในทุกอุปกรณ์ทันทีด้วยการซิงค์ข้อมูลอัตโนมัติ</p>
+                            <h3 className="font-kanit">ซิงค์ข้อมูลเรียลไทม์</h3>
+                            <p>อัปเดตยอดคงเหลือของสต็อกพัสดุและสถานะใบงานแจ้งซ่อมทันทีในทุกอุปกรณ์ด้วยระบบแจ้งเตือนอัตโนมัติ</p>
                         </div>
-                        <div className="p-8 rounded-[30px] bg-[#e0e5ec] shadow-[15px_15px_30px_#bec3cf,-15px_-15px_30px_#ffffff] hover:translate-y-[-5px] transition-all">
-                            <div className="w-14 h-14 neu-icon-wrapper !m-0 mb-6">
-                                <Shield size={24} className="text-[#6c7293]" />
+                        <div className="feature-card">
+                            <div className="feature-icon-box">
+                                <Shield size={24} />
                             </div>
-                            <h3 className="text-xl font-bold text-[#3d4468] mb-4 font-kanit">การจัดเก็บที่ปลอดภัย</h3>
-                            <p className="text-[#9499b7]">ข้อมูลของคุณได้รับการปกป้องด้วยมาตรฐานระดับอุตสาหกรรมและการจัดเก็บข้อมูลบนคลาวด์ที่มั่นคง</p>
+                            <h3 className="font-kanit">การจัดเก็บที่ปลอดภัย</h3>
+                            <p>ปกป้องข้อมูลคลังและประวัติการทำรายการแจ้งซ่อมของหน่วยงานผ่านระบบตรวจสอบสิทธิ์ JWT และ OIDC SSO</p>
                         </div>
-                        <div className="p-8 rounded-[30px] bg-[#e0e5ec] shadow-[15px_15px_30px_#bec3cf,-15px_-15px_30px_#ffffff] hover:translate-y-[-5px] transition-all">
-                            <div className="w-14 h-14 neu-icon-wrapper !m-0 mb-6">
-                                <BarChart2 size={24} className="text-[#6c7293]" />
+                        <div className="feature-card">
+                            <div className="feature-icon-box">
+                                <BarChart2 size={24} />
                             </div>
-                            <h3 className="text-xl font-bold text-[#3d4468] mb-4 font-kanit">การวิเคราะห์ขั้นสูง</h3>
-                            <p className="text-[#9499b7]">รับข้อมูลเชิงลึกเกี่ยวกับระดับสต็อกและรูปแบบการทำธุรกรรมของคุณด้วยรายงานภาพที่ชัดเจนและเข้าใจง่าย</p>
+                            <h3 className="font-kanit">สถิติและรายงานครบครัน</h3>
+                            <p>ประมวลผลรายงานยอดคงคลังสูงสุด ล็อตพัสดุแยกตามปีงบประมาณ และรายการวัสดุที่ต้องสั่งซื้อด่วนได้อย่างแม่นยำ</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="w-full py-12 px-6 text-center text-[#9499b7]">
-                <p>© 2026 WHMS. สงวนลิขสิทธิ์ทั้งหมด</p>
+            <footer className="footer-mktg">
+                <div className="max-w-6xl mx-auto px-6">
+                    <p>© 2026 WHMS - Warehouse Management System. สงวนลิขสิทธิ์ทั้งหมด</p>
+                </div>
             </footer>
         </div>
     );

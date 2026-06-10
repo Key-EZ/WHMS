@@ -49,6 +49,7 @@ model Item {
   category   Category?  @relation(fields: [category_id], references: [category_id])
   unit       Unit?      @relation(fields: [unit_id], references: [unit_id])
   stock_lots StockLot[]
+  repairs    RepairRequest[]
 
   @@map("Items")
 }
@@ -64,6 +65,7 @@ model StockLot {
 
   item         Item?         @relation(fields: [item_id], references: [item_id])
   transactions Transaction[]
+  repairs      RepairRequest[]
 
   @@map("Stock_Lots")
 }
@@ -91,12 +93,56 @@ model Transaction {
 }
 
 model User {
-  user_id    Int      @id @default(autoincrement())
-  email      String   @unique @db.VarChar(100)
-  password   String   @db.VarChar(255)
-  name       String?  @db.VarChar(100)
-  role       String   @default("USER")
-  created_at DateTime @default(now())
+  user_id           Int             @id @default(autoincrement())
+  email             String          @unique @db.VarChar(100)
+  password          String          @db.VarChar(255)
+  name              String?         @db.VarChar(100)
+  role              String          @default("USER")
+  created_at        DateTime        @default(now())
+  repairs_requested RepairRequest[] @relation("Requester")
+  repairs_handled   RepairHistory[] @relation("Operator")
 
   @@map("Users")
+}
+
+enum RepairStatus {
+  PENDING     @map("รอดำเนินการ")
+  IN_PROGRESS @map("กำลังดำเนินการ")
+  COMPLETED   @map("เสร็จสิ้น")
+  CANCELLED   @map("ยกเลิก")
+}
+
+model RepairRequest {
+  repair_id     Int             @id @default(autoincrement())
+  item_id       Int?            
+  lot_id        Int?            
+  requester_id  Int             
+  subject       String          @db.VarChar(255)
+  description   String          @db.Text
+  request_date  DateTime        @default(now())
+  status        RepairStatus    @default(PENDING)
+  remark        String?         @db.Text
+  cost          Decimal?        @db.Decimal(10, 2)
+  repairer_name String?         @db.VarChar(100)
+
+  item      Item?      @relation(fields: [item_id], references: [item_id])
+  lot       StockLot?  @relation(fields: [lot_id], references: [lot_id])
+  requester User       @relation("Requester", fields: [requester_id], references: [user_id], map: "RepairRequest_requester_fkey")
+  history   RepairHistory[]
+
+  @@map("Repair_Requests")
+}
+
+model RepairHistory {
+  history_id  Int          @id @default(autoincrement())
+  repair_id   Int
+  status      RepairStatus
+  update_date DateTime     @default(now())
+  remark      String?      @db.Text
+  operator_id Int
+
+  repair   RepairRequest @relation(fields: [repair_id], references: [repair_id], onDelete: Cascade)
+  operator User          @relation("Operator", fields: [operator_id], references: [user_id], map: "RepairHistory_operator_fkey")
+
+  @@map("Repair_History")
 }

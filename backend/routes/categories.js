@@ -26,4 +26,33 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Update category
+router.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { category_name } = req.body;
+        const category = await prisma.category.update({
+            where: { category_id: parseInt(id) },
+            data: { category_name }
+        });
+        res.json(category);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update category' });
+    }
+});
+
+// Delete category
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await prisma.category.delete({
+            where: { category_id: parseInt(id) }
+        });
+        res.json({ message: 'Category deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete category' });
+    }
+});
+
 module.exports = router;
+

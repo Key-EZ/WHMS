@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/neumorphism.css';
-import { Mail, Lock, User, Globe } from 'lucide-react';
+import '../styles/modern-saas.css';
+import { Globe, Eye, EyeOff } from 'lucide-react';
 import api from '../api';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showMockModal, setShowMockModal] = useState(false);
-    const cardRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const LoginPage = () => {
             const response = await api.post('/auth/authentik/callback', { code, redirectUri });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
-            navigate('/app/dashboard');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'การเข้าสู่ระบบ SSO ล้มเหลว');
         } finally {
@@ -59,22 +59,6 @@ const LoginPage = () => {
         navigate('?code=' + mockCode);
     };
 
-
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (!cardRef.current) return;
-            const card = cardRef.current;
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-            const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
-            const shadowX = x * 20;
-            const shadowY = y * 20;
-            card.style.boxShadow = `${shadowX}px ${shadowY}px 60px #bec3cf, ${-shadowX}px ${-shadowY}px 60px #ffffff`;
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     const validateEmail = (email) => {
         return String(email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     };
@@ -98,7 +82,7 @@ const LoginPage = () => {
             const response = await api.post('/auth/login', { email, password });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
-            navigate('/app/dashboard');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'เข้าสู่ระบบล้มเหลว');
         } finally {
@@ -107,26 +91,28 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="neu-container">
-            <div className="login-card" ref={cardRef}>
-                <div className="login-header">
-                    <div className="neu-icon">
-                        <User size={40} />
-                    </div>
-                    <h2>ยินดีต้อนรับกลับมา</h2>
-                    <p>กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบ</p>
-                </div>
-
-                <form onSubmit={handleSubmit}>
-                    {error && (
-                        <div className="mb-6 px-4 py-3 rounded-xl bg-red-50 text-red-500 text-sm font-semibold shadow-[inset_2px_2px_5_#ffb8c4,inset_-2px_-2px_5px_#ffffff]">
-                            {error}
+        <div className="login-page-wrapper">
+            <div className="login-container">
+                <div className="login-card">
+                    <div className="login-header">
+                        <div className="logo">
+                            <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="6" fill="#635BFF"/>
+                                <path d="M8 12h16v2H8v-2zm0 4h16v2H8v-2zm0 4h10v2H8v-2z" fill="white"/>
+                            </svg>
                         </div>
-                    )}
+                        <h2>เข้าสู่ระบบ WHMS</h2>
+                        <p>คลังพัสดุและแจ้งซ่อมออนไลน์</p>
+                    </div>
 
-                    <div className="form-group">
-                        <div className="neu-input">
-                            <Mail className="input-icon" />
+                    <form onSubmit={handleSubmit}>
+                        {error && (
+                            <div className="mb-6 px-4 py-3 rounded-lg bg-red-50 text-red-500 text-sm font-semibold border border-red-100">
+                                {error}
+                            </div>
+                        )}
+
+                        <div className="input-group">
                             <input
                                 type="email"
                                 id="email"
@@ -134,77 +120,95 @@ const LoginPage = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                autoComplete="email"
                             />
                             <label htmlFor="email">ที่อยู่อีเมล</label>
+                            <span className="input-border"></span>
                         </div>
-                    </div>
 
-                    <div className="form-group">
-                        <div className="neu-input">
-                            <Lock className="input-icon" />
+                        <div className="input-group">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 placeholder=" "
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                autoComplete="current-password"
                             />
                             <label htmlFor="password">รหัสผ่าน</label>
+                            <button 
+                                type="button" 
+                                className="password-toggle" 
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label="แสดง/ซ่อนรหัสผ่าน"
+                            >
+                                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                            <span className="input-border"></span>
                         </div>
-                    </div>
 
-                    <div className="form-options">
-                        <label className="remember-wrapper">
-                            <input type="checkbox" id="remember" className="hidden" />
-                            <div className="checkbox-label">
-                                <div className="neu-checkbox">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
+                        <div className="form-options">
+                            <label className="checkbox-container">
+                                <input type="checkbox" id="remember" name="remember" />
+                                <span className="checkmark">
+                                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                        <path d="M1 4l2.5 2.5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                </div>
-                                <span>จดจำการเข้าสู่ระบบ</span>
+                                </span>
+                                จดจำการเข้าสู่ระบบ
+                            </label>
+                            <a href="#" className="forgot-link">ลืมรหัสผ่าน?</a>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className={`submit-btn ${isLoading ? 'loading' : ''}`} 
+                            disabled={isLoading}
+                        >
+                            <span className="btn-text">{isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}</span>
+                            <div className="btn-loader">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" opacity="0.25"/>
+                                    <path d="M16 9a7 7 0 01-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                        <animateTransform attributeName="transform" type="rotate" dur="1s" values="0 9 9;360 9 9" repeatCount="indefinite"/>
+                                    </path>
+                                </svg>
                             </div>
-                        </label>
-                        <a href="#" className="forgot-link">ลืมรหัสผ่าน?</a>
+                        </button>
+                    </form>
+
+                    <div className="divider">
+                        <span>หรือเข้าสู่ระบบด้วย OIDC</span>
                     </div>
 
-                    <button type="submit" className={`neu-button ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`} disabled={isLoading}>
-                        {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
-                    </button>
-                </form>
+                    <div className="social-buttons">
+                        <button 
+                            type="button" 
+                            onClick={handleAuthentikLogin} 
+                            className="social-btn"
+                        >
+                            <Globe size={18} />
+                            <span>เข้าสู่ระบบด้วย Authentik</span>
+                        </button>
+                    </div>
 
-                <div className="neu-divider">
-                    <div className="neu-line"></div>
-                    <span>หรือเข้าสู่ระบบด้วย SSO</span>
-                    <div className="neu-line"></div>
-                </div>
-
-                <div className="mb-6">
-                    <button 
-                        type="button" 
-                        onClick={handleAuthentikLogin} 
-                        className="neu-button flex items-center justify-center gap-3 text-[#3d4468] hover:text-[#5046e5]"
-                    >
-                        <Globe size={20} />
-                        <span>เข้าสู่ระบบด้วย Authentik</span>
-                    </button>
-                </div>
-
-                <div className="neu-footer-link">
-                    <p>ยังไม่มีบัญชี? <Link to="/signup">สร้างบัญชีใหม่</Link></p>
+                    <div className="signup-link">
+                        <span>ยังไม่มีบัญชี? </span>
+                        <Link to="/signup">สร้างบัญชีใหม่</Link>
+                    </div>
                 </div>
             </div>
 
             {/* Mock Authentik SSO Dialog */}
             {showMockModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-                    <div className="w-full max-w-md p-8 rounded-[30px] bg-[#e0e5ec] shadow-[20px_20px_60px_#bec3cf,-20px_-20px_60px_#ffffff] text-center">
-                        <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-[#e0e5ec] shadow-[inset_4px_4px_8px_#bec3cf,inset_-4px_-4px_8px_#ffffff] text-[#3d4468]">
-                            <Globe size={32} className="animate-pulse text-indigo-600" />
+                    <div className="w-full max-w-md p-8 rounded-2xl bg-white shadow-xl text-center border border-slate-100">
+                        <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+                            <Globe size={32} className="animate-pulse" />
                         </div>
-                        <h3 className="text-xl font-bold mb-2 text-[#3d4468] font-kanit">Authentik SSO (Mock Mode)</h3>
-                        <p className="text-sm text-[#9499b7] mb-6">
+                        <h3 className="text-xl font-bold mb-2 text-slate-800 font-kanit">Authentik SSO (Mock Mode)</h3>
+                        <p className="text-sm text-slate-500 mb-6">
                             ระบบกำลังทำงานในโหมดทดสอบ (Mock Mode)<br/>
                             กดปุ่มด้านล่างเพื่อจำลองการอนุมัติสิทธิ์การเชื่อมต่อ
                         </p>
@@ -212,14 +216,14 @@ const LoginPage = () => {
                             <button 
                                 type="button"
                                 onClick={() => setShowMockModal(false)}
-                                className="flex-1 py-3 px-6 rounded-xl font-semibold bg-[#e0e5ec] text-[#6c7293] shadow-[4px_4px_10px_#bec3cf,-4px_-4px_10px_#ffffff] active:shadow-[inset_2px_2px_5px_#bec3cf,inset_-2px_-2px_5px_#ffffff] transition-all hover:scale-[1.02]"
+                                className="flex-1 py-3 px-6 rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
                             >
                                 ยกเลิก
                             </button>
                             <button 
                                 type="button"
                                 onClick={handleMockAuthorize}
-                                className="flex-1 py-3 px-6 rounded-xl font-semibold bg-[#e0e5ec] text-emerald-600 shadow-[4px_4px_10px_#bec3cf,-4px_-4px_10px_#ffffff] active:shadow-[inset_2px_2px_5px_#bec3cf,inset_-2px_-2px_5px_#ffffff] transition-all hover:scale-[1.02]"
+                                className="flex-1 py-3 px-6 rounded-xl font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition"
                             >
                                 อนุมัติ (Authorize)
                             </button>
